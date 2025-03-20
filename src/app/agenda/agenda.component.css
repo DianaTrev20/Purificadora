@@ -1,0 +1,8 @@
+.fc-event {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  .fc-event:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
