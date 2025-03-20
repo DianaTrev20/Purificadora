@@ -1,0 +1,16 @@
+.notificacion_recibida
+{
+    width: 18px;
+    height: 18px;
+    border-radius: 100%;
+    background-color: rgb(209, 100, 100);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    margin-left: 20px;
+    margin-top: -20px;
+    position: absolute;
+    z-index: 2;
+}

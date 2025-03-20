@@ -22,6 +22,12 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+  // OBTENER NOTIFICACIONES
+  obtener_notificaciones(): Observable<any>
+  {
+    return this.http.get(`${this.baseUrl}/notificaciones`);
+  }
+
   // LOGIN
   login(username: string, password: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, { username, password });
