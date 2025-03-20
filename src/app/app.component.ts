@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; 
+import { ApiService } from './api.service';
 import { NotificacionesService } from './servicios/notificaciones.service';
 
 
@@ -20,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   notificaciones_cantidad = this.notificaciones_array.length;
 
-  constructor(private notificaciones: NotificacionesService)
+  constructor(private apiService: ApiService, private notificaciones: NotificacionesService)
   {
     
   }
@@ -38,6 +39,8 @@ export class AppComponent implements OnInit, OnDestroy {
       
       
     });
+
+    this.obtenerNotificaciones();
     
   }
 
@@ -45,6 +48,25 @@ export class AppComponent implements OnInit, OnDestroy {
   {
     this.notificaciones.disconnect();
   }
+
+  obtenerNotificaciones()
+  {
+    this.apiService.obtener_notificaciones().subscribe({
+      next: (data: any) =>
+      {
+        this.notificaciones = data;
+        this.notificaciones_cantidad = data.length;
+
+        console.log(this.notificaciones);
+        
+      },
+      error: (err) =>
+      {
+        console.error('Error al obtener los recorridos:', err);
+      }
+    });
+  }
+
 
   
 }

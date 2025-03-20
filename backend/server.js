@@ -56,6 +56,28 @@ app.get('/', (req, res) => {
   res.send('¡Bienvenido al servidor de la Purificadora San Lorenzo!');
 });
 
+app.get('/notificaciones', (req, res) =>
+{
+  db.query('SELECT * FROM notificaciones', (err, results) =>
+  {
+    if (err)
+    {
+      console.error('Error al obtener las notificaciones:', err);
+
+      res.status(500).send('Error al obtener las notificaciones');
+
+      return;
+    }
+
+    console.log(results);
+    
+
+    res.json(results);
+
+  });
+
+});
+
 app.get('/usuarios', (req, res) => {
   db.query('SELECT * FROM usuarios', (err, results) => {
     if (err) {

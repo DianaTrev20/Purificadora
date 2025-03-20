@@ -10,8 +10,8 @@
         
       </button>
 
-      <span class="notificacion_recibida">
-        1
+      <span *ngIf="notificaciones_cantidad > 0" class="notificacion_recibida">
+        {{ notificaciones_cantidad }}
       </span>
     </div>
 
