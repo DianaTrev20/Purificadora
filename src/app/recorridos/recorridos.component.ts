@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '../shared/pipes/filter.pipe';
@@ -28,7 +28,9 @@ export class RecorridosComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
+
     this.obtenerRecorridos();
+
   }
 
   obtenerRecorridos() {
@@ -106,4 +108,7 @@ export class RecorridosComponent implements OnInit {
       }
     });
   }
+
+
+  
 }

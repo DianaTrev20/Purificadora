@@ -6,10 +6,41 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Modulo para crear un servidor http
+const http = require('http'); 
+// Modulo para notificaciones en tiempo real
+const { Server } = require('socket.io'); 
+
+// Creamos un servidor HTTP y le pasamos el servidor express
+const servidor = http.createServer(app); 
+
+
+const notificaciones = new Server(servidor,
+{
+  cors: {
+    // Permite conexiones desde cualquier origen
+    origin: "*", 
+    methods: ["GET", "POST", "PUT", "DELETE"]
+  }
+});
+
+
+// Evento cuando un cliente se conecta a Socket.IO
+notificaciones.on("connection", (socket) => 
+{
+  console.log(`Usuario conectado: ${socket.id}`);
+
+  socket.emit("notificacion", { notificacion: "Notificación de prueba", id: socket.id });
+
+  
+});
+
+
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
+  port: 3307,
   database: 'Proyecto'
 });
 
@@ -23,6 +54,28 @@ db.connect((err) => {
 
 app.get('/', (req, res) => {
   res.send('¡Bienvenido al servidor de la Purificadora San Lorenzo!');
+});
+
+app.get('/notificaciones', (req, res) =>
+{
+  db.query('SELECT * FROM notificaciones', (err, results) =>
+  {
+    if (err)
+    {
+      console.error('Error al obtener las notificaciones:', err);
+
+      res.status(500).send('Error al obtener las notificaciones');
+
+      return;
+    }
+
+    console.log(results);
+    
+
+    res.json(results);
+
+  });
+
 });
 
 app.get('/usuarios', (req, res) => {
@@ -108,6 +161,7 @@ app.get('/inventario/notificaciones', (req, res) => {
 });
 
 const PORT = 3000;
-app.listen(PORT, () => {
+servidor.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
+
 });

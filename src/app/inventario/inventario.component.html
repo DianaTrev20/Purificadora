@@ -43,9 +43,9 @@
     <tbody>
       <tr *ngFor="let item of inventario | slice:0:cantidadRegistros" [ngClass]="{'table-danger': item.cantidad < stockMinimo}">
         <td>{{ item.id }}</td>
-        <td>{{ item.nombre }}</td>
+        <td>{{ item.nombre_producto }}</td>
         <td>{{ item.categoria }}</td>
-        <td>{{ item.cantidad }}</td>
+        <td>{{ item.cantidad_stock }}</td>
         <td>{{ item.unidad_medida }}</td>
         <td>{{ item.precio_compra | currency }}</td>
         <td>{{ item.precio_venta | currency }}</td>
