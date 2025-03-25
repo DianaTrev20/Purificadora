@@ -72,6 +72,16 @@ export class ApiService {
     return this.http.put<Producto>(`${this.baseUrl}/inventario/${id}`, producto);
   }
 
+  // VENDER UN PRODUCTO (De donde sacamos la cantidad que se vendió ¿¿??)
+  venderProducto(id: number, producto: Producto, cantidad: number): Observable<Producto>
+  {
+    producto.cantidad = cantidad;
+    
+    return this.http.put<Producto>(`${this.baseUrl}/inventario/${id}`, producto);
+  }
+
+  
+
   deleteProducto(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/inventario/${id}`);
   }

@@ -52,6 +52,10 @@ db.connect((err) => {
   console.log('Conectado a la base de datos MySQL');
 });
 
+
+
+const stockMinimo = 5;
+
 app.get('/', (req, res) => {
   res.send('¡Bienvenido al servidor de la Purificadora San Lorenzo!');
 });
@@ -130,12 +134,71 @@ app.post('/inventario', (req, res) => {
 
 // Actualizar un producto 
 app.put('/inventario/:id', (req, res) => {
+
+
   const { id } = req.params;
+
+  console.log("BODY", req.body);
+
+  
   const { cantidad, estado } = req.body;
-  db.query('UPDATE inventario SET cantidad = ?, estado = ? WHERE id = ?', [cantidad, estado, id], (err, result) => {
+
+  db.query('UPDATE inventario SET cantidad_stock = cantidad_stock - ?, estado = ? WHERE id = ?', [cantidad, estado, id], (err, result) => {
+
+    if (err) return res.status(500).json(err);
+
+    db.query('SELECT * from inventario  WHERE id = ?', [id], (err, result) =>
+    {
       if (err) return res.status(500).json(err);
-      res.json({ message: 'Producto actualizado' });
+
+      console.log(result[0]);
+      
+
+      console.log("STOCK despues de vender", result[0].cantidad_stock);
+
+      nombre_producto = result[0].nombre_producto;
+      cantidad_stock = result[0].cantidad_stock;
+
+      if(result[0].cantidad_stock < stockMinimo )
+      {
+        db.query('INSERT INTO notificaciones(tipo, mensaje) VALUES("inventario bajo", ?)', [`Quedan ${result[0].cantidad_stock} unidades de: ${result[0].nombre_producto}`], (err, result) =>
+        {
+          if (err) return res.status(500).json(err);
+          
+          notificaciones.emit("notificacion", { tipo: "Inventario bajo", mensaje: `Quedan  ${cantidad_stock} unidades de: ${nombre_producto}` });
+
+          console.log("Producto actualizado y notificación enviada");
+          
+
+          res.json({ message: 'Producto actualizado' });
+
+          return;
+
+        });
+
+        
+      }
+      else
+      {
+        console.log("Producto actualizado");
+        res.json({ message: 'Producto actualizado' });
+
+        return;
+      }
+
+      
+      
+
+      
+
+      
+      
+
+    });
+      
   });
+
+
 });
 
 // Eliminar un producto
@@ -147,12 +210,12 @@ app.delete('/inventario/:id', (req, res) => {
   });
 });
 
-app.get('/inventario', (req, res) => {
-  res.json(inventario);
-});
+// app.get('/inventario', (req, res) => {
+//   res.json(inventario);
+// });
 
 app.get('/inventario/notificaciones', (req, res) => {
-  const stockMinimo = 5;
+  
   const notificaciones = inventario
     .filter(item => item.cantidad < stockMinimo)
     .map(item => ({ id: item.id, mensaje: `⚠️ Producto bajo en stock: ${item.nombre}` }));

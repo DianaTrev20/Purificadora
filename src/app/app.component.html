@@ -5,7 +5,7 @@
   <div class="d-flex align-items-center">
     
     <div>
-      <button class="btn btn-link text-white mr-2" title="Notificaciones">
+      <button class="btn btn-link text-white mr-2" title="Notificaciones" (click)="abrir_cerrar_notificaciones()">
         <i class="fas fa-bell"></i>
         
       </button>
@@ -13,6 +13,15 @@
       <span *ngIf="notificaciones_cantidad > 0" class="notificacion_recibida">
         {{ notificaciones_cantidad }}
       </span>
+
+      <div id="notificaciones_contenedor" *ngIf="notificaciones_abierto">
+        <div class="notificacion_item" *ngFor="let notificacion of notificaciones_array.reverse()">
+          <b><p class="notificacion_tipo">{{ notificacion.tipo }}</p></b>
+          <p>{{ notificacion.mensaje }}</p>
+        </div>
+      </div>
+
+
     </div>
 
     <button class="btn btn-link text-white mr-2" title="Calendario">

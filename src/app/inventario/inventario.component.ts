@@ -5,6 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '../shared/pipes/filter.pipe';
 import { ApiService, Producto } from '../api.service';
 
+import { AppComponent } from '../app.component';
+import { NotificacionesService } from '../servicios/notificaciones.service';
+
 
 @Component({
   selector: 'app-inventario',
@@ -25,7 +28,7 @@ export class InventarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadInventario();
-    this.loadNotificaciones();
+    // this.loadNotificaciones();
   }
 
   loadInventario(): void {
@@ -85,9 +88,23 @@ export class InventarioComponent implements OnInit {
     );
   }
 
+  venderProducto(producto: Producto): void
+  {
+
+    this.apiService.venderProducto(producto.id!, producto, 1).subscribe(() => 
+    {
+      this.loadInventario();
+
+    },
+      (error) => console.error('Error al editar producto:', error)
+    );
+  }
+
   eliminarProducto(id: number): void {
-    this.apiService.deleteProducto(id).subscribe(
-      () => this.loadInventario(),
+    this.apiService.deleteProducto(id).subscribe(() => 
+
+      this.loadInventario(),
+
       (error) => console.error('Error al eliminar producto:', error)
     );
   }
