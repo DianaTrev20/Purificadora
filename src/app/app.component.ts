@@ -16,6 +16,8 @@ import { NotificacionesService } from './servicios/notificaciones.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'Proyecto'; 
+  
+  notificaciones_abierto = false;
 
   notificaciones_array = [];
 
@@ -35,10 +37,16 @@ export class AppComponent implements OnInit, OnDestroy {
       console.log(`Mensaje recibido: ${notificacion.notificacion}`);
       console.log(notificacion);
 
+      this.obtenerNotificaciones();
+
       // alert(notificacion.notificacion);
       
       
     });
+
+    // this.apiService.obtener_notificaciones$.subscribe(() => {
+    //   this.cargarDatos();
+    // });
 
     this.obtenerNotificaciones();
     
@@ -49,15 +57,20 @@ export class AppComponent implements OnInit, OnDestroy {
     this.notificaciones.disconnect();
   }
 
+  abrir_cerrar_notificaciones()
+  {
+    this.notificaciones_abierto = !this.notificaciones_abierto;
+  }
+
   obtenerNotificaciones()
   {
     this.apiService.obtener_notificaciones().subscribe({
       next: (data: any) =>
       {
-        this.notificaciones = data;
+        this.notificaciones_array = data;
         this.notificaciones_cantidad = data.length;
 
-        console.log(this.notificaciones);
+        console.log(this.notificaciones_array);
         
       },
       error: (err) =>

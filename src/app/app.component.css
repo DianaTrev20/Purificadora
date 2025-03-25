@@ -14,3 +14,40 @@
     position: absolute;
     z-index: 2;
 }
+
+#notificaciones_contenedor
+{
+    position: absolute;
+    width: 350px;
+    height: auto;
+    min-height: 65px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 7px 10px rgba(0, 0, 0, 0.3);
+    margin-left: -250px;
+    z-index: 2;
+}
+.notificacion_item
+{
+    width: 100%;
+    height: 65px;
+    padding: 0 15px;
+    color: #000;
+    font-size: 13px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid #dedbdb;
+    box-sizing: border-box;
+
+}
+.notificacion_item p
+{
+    margin: 0;
+}
+p.notificacion_tipo
+{
+    margin-bottom: 5px;
+    color: rgb(13, 110, 253);
+}
