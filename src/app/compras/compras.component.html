@@ -36,7 +36,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let compra of comprasFiltradas">
+          <tr *ngFor="let compra of compras">
             <td>{{ compra.id }}</td>
             <td>{{ compra.nombre_proveedor || 'Sin proveedor' }}</td>
             <td>{{ compra.producto }}</td>
@@ -73,7 +73,7 @@
               </div>
             </td>
           </tr>
-          <tr *ngIf="comprasFiltradas.length === 0">
+          <tr *ngIf="compras.length === 0">
             <td colspan="9" class="text-center">No se encontraron compras</td>
           </tr>
         </tbody>

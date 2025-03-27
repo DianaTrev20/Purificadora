@@ -55,7 +55,7 @@ export class ComprasComponent implements OnInit {
   cargarCompras(): void {
     this.comprasService.getCompras().subscribe({
       next: (data) => this.compras = data,
-      error: (error) => console.log("Error al cargar comprar")
+      error: (error) => console.log("Error al cargar compras")
        // this.notificationService.showError('Error al cargar compras')
     });
   }
@@ -116,7 +116,7 @@ export class ComprasComponent implements OnInit {
     }
   }
 
-  get comprasFiltradas(): any[] {
+  comprasFiltradas(): any[] {
     return this.compras.filter(compra => 
       compra.producto.toLowerCase().includes(this.filtro.toLowerCase()) ||
       (compra.nombre_proveedor && compra.nombre_proveedor.toLowerCase().includes(this.filtro.toLowerCase())) ||

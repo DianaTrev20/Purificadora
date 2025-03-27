@@ -40,7 +40,7 @@ const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  port: 3306,
+  port: 3307,
   database: 'Proyecto'
 });
 
@@ -259,6 +259,9 @@ app.get('/compras', (req, res) => {
       res.status(500).send('Error al obtener compras');
       return;
     }
+
+    console.log("GET COMPRAS", results);
+    
     res.json(results);
   });
 });

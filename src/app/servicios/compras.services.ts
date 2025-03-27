@@ -7,12 +7,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ComprasService {
-  private apiUrl = `${environment.apiUrl}/compras`;
+  private apiUrl = `${environment.apiUrl}`;
 
   constructor(private http: HttpClient) { }
 
   getCompras(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(`${this.apiUrl}/compras`);
   }
 
   getProveedores(): Observable<any[]> {
@@ -20,7 +20,7 @@ export class ComprasService {
   }
 
   crearCompra(compraData: any): Observable<any> {
-    return this.http.post(this.apiUrl, compraData);
+    return this.http.post(`${this.apiUrl}/compras`, compraData);
   }
 
   actualizarCompra(id: number, estado: string): Observable<any> {
