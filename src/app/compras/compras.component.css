@@ -1,0 +1,83 @@
+/* Estilos para la tabla */
+.table-responsive {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .table th {
+    background-color: #343a40;
+    color: white;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+  
+  /* Estilos para los badges de estado */
+  .badge {
+    padding: 0.5em 0.75em;
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Estilos para los botones de acción */
+  .btn-group .btn {
+    border-radius: 4px;
+    transition: all 0.3s;
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: #0d6efd;
+    color: white;
+  }
+  
+  .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  /* Estilos para el modal */
+  .modal-content {
+    border: none;
+    border-radius: 10px;
+  }
+  
+  .modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  /* Estilos para el formulario */
+  .form-control, .form-select {
+    border-radius: 5px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ced4da;
+  }
+  
+  .form-control:focus, .form-select:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  }
+  
+  /* Estilos para el botón de búsqueda */
+  .input-group-text {
+    background-color: #e9ecef;
+    border-right: none;
+  }
+  
+  .input-group input {
+    border-left: none;
+  }
+  
+  .input-group input:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+  }
+

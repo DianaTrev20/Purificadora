@@ -1,0 +1,101 @@
+<header class="header bg-primary text-white p-2 d-flex justify-content-between align-items-center">
+  <div class="d-flex align-items-center">
+    <h1 class="m-0" style="font-size: 1.5rem;">Purificadora San Lorenzo</h1>
+  </div>
+  <div class="d-flex align-items-center">
+    
+    <div>
+      <button class="btn btn-link text-white mr-2" title="Notificaciones" (click)="abrir_cerrar_notificaciones()">
+        <i class="fas fa-bell"></i>
+        
+      </button>
+
+      <span *ngIf="notificaciones_cantidad > 0" class="notificacion_recibida">
+        {{ notificaciones_cantidad }}
+      </span>
+
+      <div id="notificaciones_contenedor" *ngIf="notificaciones_abierto">
+        <div class="notificacion_item" *ngFor="let notificacion of notificaciones_array.reverse()">
+          <b><p class="notificacion_tipo">{{ notificacion.tipo }}</p></b>
+          <p>{{ notificacion.mensaje }}</p>
+        </div>
+      </div>
+
+
+    </div>
+
+    <button class="btn btn-link text-white mr-2" title="Calendario">
+      <i class="fas fa-calendar"></i>
+    </button>
+    <button class="btn btn-link text-white" title="Salir">
+      <i class="fas fa-sign-out-alt"></i>
+    </button>
+  </div>
+</header>
+
+
+<div class="d-flex">
+  <aside class="bg-white text-black p-3" style="width: 250px; min-height: 100vh;">
+
+    <div class="text-center p-2" style="background-color: #f0f0f0; border-radius: 10px; margin-bottom: 10px;">
+      <img src="assets/imagenes/logo.png" alt="Logo" width="100" height="50">
+    </div>
+
+ 
+    <form class="mb-4">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" style="background-color: white; color: black;">
+        <button class="btn btn-outline-dark" type="button">
+          <i class="fas fa-search" style="color: black;"></i>
+        </button>
+      </div>
+    </form>
+
+   
+    <ul class="nav flex-column">
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/inicio">
+          <i class="fas fa-home mr-2"></i> Inicio
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/recorridos">
+          <i class="fas fa-route mr-2"></i> Recorridos
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/inventario">
+          <i class="fas fa-boxes mr-2"></i> Inventario
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/agenda">
+          <i class="fas fa-calendar-alt mr-2"></i> Agenda
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/clientes">
+          <i class="fas fa-users mr-2"></i> Clientes
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/compras">
+          <i class="fas fa-shopping-cart mr-2"></i> Compras
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/reportes">
+          <i class="fas fa-chart-bar mr-2"></i> Reportes
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="flex-grow-1 p-4" style="background-color: #f8f9fa; position: relative;">
+    <div style="position: absolute; top: 20px; right: 20px;">
+      <img src="assets/imagenes/logo.png" alt="Logo" width="80" height="40">
+    </div>
+
+    <router-outlet></router-outlet>
+  </main>
+</div>

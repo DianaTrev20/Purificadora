@@ -1,0 +1,62 @@
+<div class="container mt-5">
+  <h2>Recorridos</h2>
+
+  <!-- Botones de agregar y buscar -->
+  <div class="d-flex justify-content-between mb-3">
+    <button (click)="abrirModal(false)" class="btn btn-primary">Agregar</button>
+    
+    <!-- Filtro de número de registros a mostrar -->
+    <div>
+      <label for="registrosMostrar">Mostrar:</label>
+      <select (ngModel)="registrosMostrar" (change)="actualizarRegistrosMostrar()" class="form-select d-inline w-auto">
+        <option *ngFor="let opcion of opcionesRegistros" [value]="opcion">{{ opcion }}</option>
+      </select>
+    </div>
+
+    <input type="text" class="form-control w-25 d-inline-block" placeholder="Buscar..." (ngModel)="searchText">
+  </div>
+
+  <!-- Pestañas de días de la semana -->
+  <ul class="nav nav-tabs">
+    <li class="nav-item" *ngFor="let dia of diasSemana">
+      <a class="nav-link" [class.active]="diaSeleccionado === dia" (click)="seleccionarDia(dia)">
+        {{ dia }}
+      </a>
+    </li>
+  </ul>
+
+  <!-- Tabla de recorridos -->
+  <table class="table table-bordered table-striped mt-3">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Garrafón</th>
+        <th>Barrio</th>
+        <th>Precio</th>
+        <th>Día de la Semana</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let recorrido of recorridosFiltrados | slice:0:registrosMostrar | filter: searchText">
+        <td>{{ recorrido.id }}</td>
+        <td>{{ recorrido.cliente }}</td>
+        <td>{{ recorrido.garrafon }}</td>
+        <td>{{ recorrido.barrio }}</td>
+        <td>{{ recorrido.precio | currency }}</td>
+        <td>{{ recorrido.dia_semana }}</td>
+        <td class="text-center">
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-sm btn-info me-2" (click)="abrirModal(true, recorrido)" title="Editar">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="eliminarRecorrido(recorrido.id)" title="Eliminar">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,61 @@
+<div class="container mt-5">
+  <h2>Inventario</h2>
+  
+  <button class="btn btn-link text-dark position-relative" (click)="mostrarNotificaciones()">
+    <i class="fas fa-bell fa-2x"></i>
+    <span *ngIf="notificaciones.length > 0" class="badge badge-danger position-absolute top-0 start-100 translate-middle">
+      {{ notificaciones.length }}
+    </span>
+  </button>
+
+  <div *ngIf="mostrarNotif" class="notificaciones">
+    <ul class="list-group">
+      <li *ngFor="let noti of notificaciones" class="list-group-item list-group-item-danger">
+        <a href="#" (click)="irAProducto(noti.id)">{{ noti.mensaje }}</a>
+      </li>
+    </ul>
+  </div>
+
+
+<div class="mb-3">
+  <label>Mostrar: </label>
+  <select (ngModel)="cantidadRegistros" class="form-select" (change)="actualizarCantidadRegistros()">
+    <option *ngFor="let opcion of opcionesRegistros" [value]="opcion">{{ opcion }}</option>
+  </select>  
+</div>
+
+
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Producto</th>
+        <th>Categoría</th>
+        <th>Cantidad</th>
+        <th>Unidad</th>
+        <th>Precio Compra</th>
+        <th>Precio Venta</th>
+        <th>Proveedor</th>
+        <th>Ubicación</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of inventario | slice:0:cantidadRegistros" [ngClass]="{'table-danger': item.cantidad < stockMinimo}">
+        <td>{{ item.id }}</td>
+        <td>{{ item.nombre_producto }}</td>
+        <td>{{ item.categoria }}</td>
+        <td>{{ item.cantidad_stock }}</td>
+        <td>{{ item.unidad_medida }}</td>
+        <td>{{ item.precio_compra | currency }}</td>
+        <td>{{ item.precio_venta | currency }}</td>
+        <td>{{ item.proveedor }}</td>
+        <td>{{ item.ubicacion }}</td>
+        <td class="acciones">
+          <button class="btn btn-warning btn-sm" (click)="venderProducto(item)"><i class="fas fa-edit"></i></button>
+          <button class="btn btn-danger btn-sm" (click)="eliminarProducto(item.id)"><i class="fas fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
