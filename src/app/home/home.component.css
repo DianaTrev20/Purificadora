@@ -1,0 +1,221 @@
+ /* Reset y estilos base */
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f9fc;
+    color: #333;
+    overflow-x: hidden;
+  }
+  
+  .text-center {
+    text-align: center;
+    padding: 20px 0;
+    background: linear-gradient(135deg, #1e5799 0%, #2989d8 50%, #207cca 100%);
+  }
+  
+  .text-center img:first-child {
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7));
+  }
+  
+  /* Estilos del carrusel */
+  .swiper-container {
+    width: 100%;
+    height: 70vh;
+    margin: 30px auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  }
+  
+  .swiper-slide {
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 8s ease-out;
+  }
+  
+  .swiper-slide-active img {
+    transform: scale(1.1);
+  }
+  
+  .swiper-slide::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  }
+  
+  .slide-content {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    color: white;
+    z-index: 10;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease 0.3s;
+  }
+  
+  .swiper-slide-active .slide-content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .slide-content h3 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+  }
+  
+  .slide-content p {
+    font-size: 1.1rem;
+    max-width: 80%;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+  }
+  
+  /* Navegación del carrusel */
+  .swiper-button-next, .swiper-button-prev {
+    color: white;
+    background: rgba(0,0,0,0.5);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    opacity: 0;
+  }
+  
+  .swiper-container:hover .swiper-button-next,
+  .swiper-container:hover .swiper-button-prev {
+    opacity: 1;
+  }
+  
+  .swiper-button-next:hover, .swiper-button-prev:hover {
+    background: rgba(0,0,0,0.8);
+    transform: scale(1.1);
+  }
+  
+  .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: white;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+  }
+  
+  .swiper-pagination-bullet-active {
+    opacity: 1;
+    transform: scale(1.2);
+    background: #2989d8;
+  }
+  
+  /* Efecto de parallax */
+  .swiper-slide-active {
+    transform: scale(1);
+    z-index: 1;
+  }
+  
+  .swiper-slide:not(.swiper-slide-active) {
+    filter: brightness(0.7);
+  }
+  
+  /* Progress bar para el autoplay */
+  .autoplay-progress {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    z-index: 10;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+  }
+  
+  .autoplay-progress svg {
+    --progress: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    stroke-width: 4px;
+    stroke: #2989d8;
+    fill: none;
+    stroke-dashoffset: calc(125.6 * (1 - var(--progress)));
+    stroke-dasharray: 125.6;
+    transform: rotate(-90deg);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .swiper-container {
+      height: 50vh;
+    }
+    
+    .slide-content h3 {
+      font-size: 1.5rem;
+    }
+    
+    .slide-content p {
+      font-size: 0.9rem;
+      max-width: 90%;
+    }
+    
+    .swiper-button-next, .swiper-button-prev {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .swiper-container {
+      height: 40vh;
+      border-radius: 0;
+    }
+    
+    .slide-content {
+      bottom: 15px;
+      left: 15px;
+    }
+    
+    .slide-content h3 {
+      font-size: 1.2rem;
+    }
+    
+    .slide-content p {
+      font-size: 0.8rem;
+    }
+    
+    .autoplay-progress {
+      width: 36px;
+      height: 36px;
+      right: 8px;
+      bottom: 8px;
+    }
+  }

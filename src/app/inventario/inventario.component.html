@@ -1,0 +1,232 @@
+<div class="container mt-5">
+  <h2 class="mb-4">Inventario</h2>
+
+  <!-- Botón y modal -->
+  <div class="mb-4 d-flex justify-content-between align-items-center">
+    <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#nuevoProductoModal">
+      <i class="fas fa-plus me-2"></i>Agregar Producto
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div #nuevoProductoModal class="modal fade" id="nuevoProductoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title">{{ productoEditando ? 'Editar' : 'Nuevo' }} Producto</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
+            (click)="resetearFormulario()"></button>
+        </div>
+        <div class="modal-body">
+          <form #productoForm="ngForm" (ngSubmit)="guardarProducto()">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Nombre del Producto</label>
+                  <input type="text" class="form-control" [(ngModel)]="nuevoProducto.nombre_producto"
+                    name="nombre_producto" required>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Categoría</label>
+                  <input type="text" class="form-control" [(ngModel)]="nuevoProducto.categoria" name="categoria"
+                    required>
+                </div>
+
+                <div class="row mb-3">
+                  <!-- Modifica tus inputs numéricos así: -->
+                  <div class="mb-3">
+                    <label class="form-label">Stock Actual</label>
+                    <input type="number" class="form-control" [(ngModel)]="nuevoProducto.cantidad_stock"
+                      name="cantidad_stock" min="0" required #stock="ngModel">
+                    <div *ngIf="stock.invalid && (stock.dirty || stock.touched)" class="text-danger">
+                      <div *ngIf="stock.errors?.['min']">El stock no puede ser negativo</div>
+                      <div *ngIf="stock.errors?.['required']">Este campo es requerido</div>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label">Precio Compra</label>
+                    <input type="number" class="form-control" [(ngModel)]="nuevoProducto.precio_compra"
+                      name="precio_compra" min="0" step="0.01" required #precioCompra="ngModel">
+                    <div *ngIf="precioCompra.invalid && (precioCompra.dirty || precioCompra.touched)"
+                      class="text-danger">
+                      <div *ngIf="precioCompra.errors?.['min']">El precio no puede ser negativo</div>
+                      <div *ngIf="precioCompra.errors?.['required']">Este campo es requerido</div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label">Stock Mínimo</label>
+                    <input type="number" class="form-control" [(ngModel)]="nuevoProducto.stock_minimo"
+                      name="stock_minimo" min="0" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Proveedor</label>
+                  <select class="form-select" [(ngModel)]="nuevoProducto.proveedor_id" name="proveedor_id" required>
+                    <option value="" disabled selected>Seleccione proveedor</option>
+                    <option *ngFor="let p of proveedores" [value]="p.id">{{ p.nombre }}</option>
+                  </select>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-6">
+                    <label class="form-label">Precio Compra</label>
+                    <input type="number" class="form-control" [(ngModel)]="nuevoProducto.precio_compra"
+                      name="precio_compra" step="0.01" min="0" required>
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label">Precio Venta</label>
+                    <input type="number" class="form-control" [(ngModel)]="nuevoProducto.precio_venta"
+                      name="precio_venta" step="0.01" min="0" required>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Unidad de Medida</label>
+                  <input type="text" class="form-control" [(ngModel)]="nuevoProducto.unidad_medida" name="unidad_medida"
+                    required>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Fecha Entrada</label>
+                  <input type="date" class="form-control" [(ngModel)]="nuevoProducto.fecha_entrada" name="fecha_entrada"
+                    required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Fecha Caducidad</label>
+                  <input type="date" class="form-control" [(ngModel)]="nuevoProducto.fecha_caducidad"
+                    name="fecha_caducidad">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Ubicación</label>
+                  <input type="text" class="form-control" [(ngModel)]="nuevoProducto.ubicacion" name="ubicacion"
+                    required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Estado</label>
+                  <select class="form-select" [(ngModel)]="nuevoProducto.estado" name="estado" required>
+                    <option *ngFor="let e of estados" [value]="e">{{ e }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Notas</label>
+              <textarea class="form-control" [(ngModel)]="nuevoProducto.notas" name="notas" rows="3"></textarea>
+            </div>
+
+            <div class="text-end">
+              <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal"
+                (click)="resetearFormulario()">Cancelar</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!productoForm.valid">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Tabla mejorada -->
+  <div class="table-responsive rounded-3 shadow-sm">
+    <table class="table table-bordered table-hover align-middle mb-0">
+      <thead class="table-dark">
+        <tr>
+          <th class="text-center">ID</th>
+          <th>Producto</th>
+          <th>Categoría</th>
+          <th class="text-center">Stock</th>
+          <th class="text-center">Unidad</th>
+          <th class="text-end">P. Compra</th>
+          <th class="text-end">P. Venta</th>
+          <th>Proveedor</th>
+          <th class="text-center">F.entrada</th>
+          <th class="text-center">F.caducidad</th>
+          <th>Ubicación</th>
+          <th class="text-center">Estado</th>
+          <th>Notas</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="inventario.length === 0">
+          <td colspan="14" class="text-center py-4 text-muted">
+            <i class="fas fa-box-open fa-2x mb-2 d-block"></i>
+            No hay productos registrados
+          </td>
+        </tr>
+
+        <tr *ngFor="let item of inventario" [ngClass]="{
+              'table-warning': item.cantidad_stock < item.stock_minimo && item.cantidad_stock > 0,
+              'table-danger': item.cantidad_stock === 0
+            }">
+          <td class="text-center">{{ item.id }}</td>
+          <td>{{ item.nombre_producto }}</td>
+          <td>{{ item.categoria }}</td>
+          <td class="text-center">
+            <span [ngClass]="{'text-danger fw-bold': item.cantidad_stock < item.stock_minimo}">
+              {{ item.cantidad_stock }} / {{ item.stock_minimo }}
+            </span>
+          </td>
+          <td class="text-center">{{ item.unidad_medida }}</td>
+          <td class="text-end">{{ item.precio_compra | currency }}</td>
+          <td class="text-end">{{ item.precio_venta | currency }}</td>
+          <td>{{ item.nombre_proveedor || 'Sin proveedor' }}</td>
+
+          <!-- Fechas -->
+          <td class="text-center">{{ item.fecha_entrada | date:'dd/MM/yyyy' }}</td>
+          <td class="text-center">{{ item.fecha_caducidad | date:'dd/MM/yyyy' || '-' }}</td>
+
+          <!-- Ubicación -->
+          <td>{{ item.ubicacion }}</td>
+
+          <!-- Estado -->
+          <td class="text-center">
+            <span class="badge" [ngClass]="{
+              'bg-success': item.estado === 'Disponible',
+              'bg-danger': item.estado === 'Agotado',
+              'bg-warning': item.estado === 'En uso'
+            }">
+              {{ item.estado }}
+            </span>
+          </td>
+
+          <!-- Notas -->
+          <td class="small">
+            <div style="max-width: 200px; white-space: pre-wrap">{{ item.notas || '-' }}</div>
+          </td>
+
+          <!-- Acciones -->
+          <td class="text-center">
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-outline-primary" (click)="cargarParaEdicion(item)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-outline-danger" (click)="eliminarProducto(item.id)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

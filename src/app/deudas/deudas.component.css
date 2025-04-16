@@ -1,0 +1,264 @@
+/* === ESTILOS PARA LA TABLA DE DEUDAS === */
+
+/* Contenedor principal */
+.table-responsive {
+    border-radius: 0.3rem;
+    overflow: hidden;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Encabezado de tabla - estilo consistente */
+  .table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #007bff;
+    color: white;
+    vertical-align: middle;
+    border-bottom: none;
+    padding: 12px 8px;
+    font-weight: 500;
+  }
+  
+  /* Filas alternas - estilo similar a recorridos */
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 123, 255, 0.05);
+  }
+  
+  /* Efecto hover suave */
+  .table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+    transition: background-color 0.2s ease;
+  }
+  
+  /* Resaltar filas importantes */
+  .table tbody tr.highlight {
+    background-color: rgba(255, 193, 7, 0.15);
+  }
+  
+  /* Bordes de la tabla */
+  .table-bordered {
+    border: 1px solid #dee2e6;
+  }
+  
+  .table-bordered th,
+  .table-bordered td {
+    border: 1px solid #dee2e6;
+  }
+  
+  /* === ESTILOS PARA BADGES DE ESTADO === */
+  .badge {
+    font-size: 0.85em;
+    padding: 0.35em 0.65em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border-radius: 0.25rem;
+    min-width: 80px;
+    display: inline-block;
+    text-align: center;
+  }
+  
+  /* Colores para estados de deuda */
+  .badge.bg-warning {
+    background-color: #ffc107 !important;
+    color: #212529;
+  }
+  
+  .badge.bg-info {
+    background-color: #17a2b8 !important;
+  }
+  
+  .badge.bg-success {
+    background-color: #28a745 !important;
+  }
+  
+  .badge.bg-danger {
+    background-color: #dc3545 !important;
+  }
+  
+  .badge.bg-secondary {
+    background-color: #6c757d !important;
+  }
+  
+  /* === ESTILOS PARA BOTONES DE ACCIÓN === */
+  .btn-action {
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    margin: 0 2px;
+  }
+  
+  .btn-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+  
+  .btn-outline-primary {
+    color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .btn-outline-success {
+    color: #28a745;
+    border-color: #28a745;
+  }
+  
+  .btn-outline-success:hover {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+  }
+  
+  .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  /* === ESTILOS PARA EL MODAL DE DEUDAS === */
+  .modal-content {
+    border: none;
+    border-radius: 0.3rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+  
+  .modal-header {
+    background-color: #007bff;
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.3rem 0.3rem 0 0;
+    padding: 1rem;
+  }
+  
+  .modal-title {
+    font-weight: 500;
+  }
+  
+  .btn-close {
+    filter: invert(1);
+  }
+  
+  /* Campos de formulario */
+  .form-control, .form-select {
+    border-radius: 0.25rem;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  
+  .form-control:focus, .form-select:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  }
+  
+  .form-control:read-only {
+    background-color: #f8f9fa;
+    opacity: 1;
+  }
+  
+  /* === ESTILOS PARA MONTOS === */
+  .text-amount {
+    font-weight: 500;
+  }
+  
+  .text-amount.positive {
+    color: #28a745;
+  }
+  
+  .text-amount.negative {
+    color: #dc3545;
+  }
+  
+  .text-amount.pending {
+    color: #ffc107;
+  }
+  
+  /* === ESTILOS RESPONSIVOS === */
+  @media (max-width: 992px) {
+    .table-responsive {
+      font-size: 0.85rem;
+    }
+    
+    .table thead th {
+      padding: 8px 6px;
+    }
+    
+    .badge {
+      min-width: 70px;
+      font-size: 0.8rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .table-responsive {
+      border: none;
+      box-shadow: none;
+    }
+    
+    .table-bordered {
+      border: none;
+    }
+    
+    .table-bordered th,
+    .table-bordered td {
+      border: none;
+      border-bottom: 1px solid #dee2e6;
+    }
+    
+    .table thead {
+      display: none;
+    }
+    
+    .table tbody tr {
+      display: block;
+      margin-bottom: 1rem;
+      border: 1px solid #dee2e6;
+      border-radius: 0.3rem;
+    }
+    
+    .table tbody td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-bottom: 1px solid #f1f1f1;
+    }
+    
+    .table tbody td:before {
+      content: attr(data-label);
+      font-weight: bold;
+      margin-right: 1rem;
+      color: #007bff;
+    }
+    
+    .table tbody td:last-child {
+      border-bottom: none;
+    }
+    
+    .d-flex.justify-content-between {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .form-control.w-25 {
+      width: 100% !important;
+    }
+    
+    .btn-group {
+      justify-content: flex-end;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+  }

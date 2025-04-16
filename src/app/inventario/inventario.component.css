@@ -1,0 +1,174 @@
+/* === ESTILOS PARA LA TABLA DE INVENTARIO === */
+
+/* Diseño general de la tabla */
+.table {
+  font-size: 0.9rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* Encabezado de la tabla */
+.table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #007bff;
+  color: white;
+  vertical-align: middle;
+  border-bottom: none;
+  padding: 12px 8px;
+}
+
+/* Filas alternas - estilo similar a recorridos */
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Efecto hover */
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Bordes y esquinas redondeadas */
+.table-bordered {
+  border: 1px solid #dee2e6;
+  border-radius: 0.3rem;
+  overflow: hidden;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #dee2e6;
+}
+
+/* Estilos para stock bajo (rosa pastel) */
+.table-warning {
+  background-color: rgba(255, 182, 193, 0.3) !important; /* Rosa pastel */
+}
+
+.table-danger {
+  background-color: rgba(220, 53, 69, 0.15);
+}
+
+/* Badges para estados - más consistentes */
+.badge {
+  font-weight: 500;
+  padding: 0.35em 0.65em;
+  font-size: 0.85em;
+}
+
+.bg-success {
+  background-color: #28a745 !important;
+}
+
+.bg-danger {
+  background-color: #dc3545 !important;
+}
+
+.bg-warning {
+  background-color: #ffc107 !important;
+  color: #212529;
+}
+
+/* Botones de acciones */
+.btn-group-sm .btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.btn-group-sm .btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+/* Alineación de celdas */
+.text-center {
+  text-align: center;
+}
+
+.text-end {
+  text-align: right;
+}
+
+/* Contenedor responsive */
+.table-responsive {
+  border-radius: 0.3rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Mensaje cuando no hay datos */
+.text-muted {
+  color: #6c757d !important;
+}
+
+/* === ESTILOS RESPONSIVOS === */
+@media (max-width: 992px) {
+  .table-responsive {
+    font-size: 0.8rem;
+  }
+  
+  .table thead th {
+    padding: 8px 6px;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-responsive {
+    border: none;
+    box-shadow: none;
+  }
+  
+  .table-bordered {
+    border: none;
+  }
+  
+  .table-bordered th,
+  .table-bordered td {
+    border: none;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .table thead {
+    display: none;
+  }
+  
+  .table tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.3rem;
+  }
+  
+  .table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-bottom: 1px solid #f1f1f1;
+  }
+  
+  .table tbody td:before {
+    content: attr(data-label);
+    font-weight: bold;
+    margin-right: 1rem;
+    color: #007bff;
+  }
+  
+  .table tbody td:last-child {
+    border-bottom: none;
+  }
+  
+  /* Ocultar algunas columnas en móvil */
+  .table tbody td:nth-child(4):before { content: "Stock: "; }
+  .table tbody td:nth-child(5):before { content: "Unidad: "; }
+  .table tbody td:nth-child(6):before { content: "P. Compra: "; }
+  .table tbody td:nth-child(7):before { content: "P. Venta: "; }
+  .table tbody td:nth-child(8):before { content: "Proveedor: "; }
+  .table tbody td:nth-child(9):before { content: "F. Entrada: "; }
+  .table tbody td:nth-child(10):before { content: "F. Caducidad: "; }
+  .table tbody td:nth-child(11):before { content: "Ubicación: "; }
+  .table tbody td:nth-child(12):before { content: "Estado: "; }
+  .table tbody td:nth-child(13):before { content: "Notas: "; }
+  .table tbody td:nth-child(14):before { content: "Acciones: "; }
+}

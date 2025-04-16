@@ -1,0 +1,119 @@
+<div class="container mt-5">
+    <h2>Gestión de Deudas</h2>
+  
+    <div class="d-flex justify-content-between mb-3">
+      <button class="btn btn-primary">Nueva Venta</button>
+      
+      <div>
+        <label for="registrosMostrar">Mostrar:</label>
+        <select [(ngModel)]="registrosMostrar" (change)="actualizarRegistrosMostrar()" 
+                class="form-select d-inline w-auto">
+          <option *ngFor="let opcion of opcionesRegistros" [value]="opcion">{{ opcion }}</option>
+        </select>
+      </div>
+  
+      <input type="text" class="form-control w-25 d-inline-block" 
+             placeholder="Buscar..." [(ngModel)]="filtro">
+    </div>
+  
+    <table class="table table-bordered table-striped mt-3">
+      <thead class="thead-dark">
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Barrio</th>
+          <th>Garrafones</th>
+          <th>Total</th>
+          <th>Pagado</th>
+          <th>Saldo</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let deuda of deudasFiltradas()">
+          <td>{{ deuda.id }}</td>
+          <td>{{ deuda.cliente }}</td>
+          <td>{{ deuda.barrio }}</td>
+          <td>{{ deuda.cantidad_garrafones }} ({{ deuda.tipo_garrafon }})</td>
+          <td>{{ deuda.monto_total | currency }}</td>
+          <td>{{ deuda.monto_pagado | currency }}</td>
+          <td>{{ deuda.saldo_pendiente | currency }}</td>
+          <td>
+            <span class="badge" 
+                  [ngClass]="{
+                    'bg-warning': deuda.estado_pago === 'pendiente',
+                    'bg-info': deuda.estado_pago === 'parcial',
+                    'bg-success': deuda.estado_pago === 'pagado',
+                    'bg-danger': deuda.estado_pago === 'vencido'
+                  }">
+              {{ deuda.estado_pago | uppercase }}
+            </span>
+          </td>
+          <td class="text-center">
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-sm btn-info me-2" (click)="seleccionarDeuda(deuda)" 
+                      title="Registrar pago">
+                <i class="fas fa-money-bill-wave"></i>
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="eliminarDeuda(deuda.id)" 
+                      title="Eliminar">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Modal para registrar pago -->
+    <div class="modal fade" id="pagoModal" tabindex="-1" aria-hidden="true" *ngIf="deudaSeleccionada">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Registrar Pago</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" 
+                    aria-label="Close" (click)="deudaSeleccionada = null"></button>
+          </div>
+          <div class="modal-body">
+            <form (ngSubmit)="registrarPago()">
+              <div class="mb-3">
+                <label class="form-label">Cliente</label>
+                <input type="text" class="form-control" [value]="deudaSeleccionada.cliente" readonly>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">Saldo Pendiente</label>
+                  <input type="text" class="form-control" 
+                         [value]="deudaSeleccionada.saldo_pendiente | currency" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Monto a Pagar</label>
+                  <input type="number" class="form-control" 
+                         [(ngModel)]="nuevoPago.monto" name="monto" 
+                         min="0.01" [max]="deudaSeleccionada.saldo_pendiente" step="0.01" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Método de Pago</label>
+                <select class="form-select" [(ngModel)]="nuevoPago.metodo_pago" name="metodo_pago" required>
+                  <option value="efectivo">Efectivo</option>
+                  <option value="transferencia">Transferencia</option>
+                  <option value="tarjeta">Tarjeta</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Notas</label>
+                <textarea class="form-control" [(ngModel)]="nuevoPago.notas" name="notas"></textarea>
+              </div>
+              <div class="text-end">
+                <button type="button" class="btn btn-secondary me-2" 
+                        data-bs-dismiss="modal" (click)="deudaSeleccionada = null">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Registrar Pago</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

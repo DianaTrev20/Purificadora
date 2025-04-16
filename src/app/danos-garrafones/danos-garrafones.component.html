@@ -1,0 +1,181 @@
+<div class="container mt-5">
+    <h2>Reporte de Daños en Garrafones</h2>
+  
+    <div class="d-flex justify-content-between mb-3">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevoDanoModal">
+        <i class="fas fa-plus me-2"></i>Nuevo Reporte
+      </button>
+      
+      <div>
+        <label for="registrosMostrar">Mostrar:</label>
+        <select [(ngModel)]="registrosMostrar" (change)="actualizarRegistrosMostrar()" 
+                class="form-select d-inline w-auto">
+          <option *ngFor="let opcion of opcionesRegistros" [value]="opcion">{{ opcion }}</option>
+        </select>
+      </div>
+  
+      <input type="text" class="form-control w-25 d-inline-block" 
+             placeholder="Buscar..." [(ngModel)]="filtro">
+    </div>
+  
+    <table class="table table-bordered table-striped mt-3">
+      <thead class="thead-dark">
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Barrio</th>
+          <th>Garrafones</th>
+          <th>Tipo Daño</th>
+          <th>Responsable</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dano of danosFiltrados()">
+          <td>{{ dano.id }}</td>
+          <td>{{ dano.cliente }}</td>
+          <td>{{ dano.barrio }}</td>
+          <td>{{ dano.cantidad_danados }} ({{ dano.tipo_garrafon }})</td>
+          <td>{{ dano.tipo_dano | uppercase }}</td>
+          <td>{{ dano.responsable | uppercase }}</td>
+          <td>{{ dano.fecha_reporte | date:'dd/MM/yyyy' }}</td>
+          <td>
+            <span class="badge" 
+                  [ngClass]="{
+                    'bg-warning': dano.estado === 'reportado',
+                    'bg-info': dano.estado === 'en_revision',
+                    'bg-success': dano.estado === 'resuelto',
+                    'bg-danger': dano.estado === 'cobrado'
+                  }">
+              {{ dano.estado | uppercase }}
+            </span>
+          </td>
+          <td class="text-center">
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-sm btn-info me-2" (click)="seleccionarDano(dano)" 
+                      title="Editar" data-bs-toggle="modal" data-bs-target="#editarDanoModal">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="eliminarDano(dano.id)" 
+                      title="Eliminar">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Modal para nuevo reporte -->
+    <div class="modal fade" id="nuevoDanoModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Reportar Daño</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form (ngSubmit)="reportarDano()">
+              <div class="mb-3">
+                <label class="form-label">Recorrido/Cliente</label>
+                <input type="text" class="form-control" placeholder="Buscar cliente..." 
+                       [(ngModel)]="nuevoDano.recorrido_id" name="recorrido_id" required>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">Cantidad Dañados</label>
+                  <input type="number" class="form-control" 
+                         [(ngModel)]="nuevoDano.cantidad_danados" name="cantidad_danados" 
+                         min="1" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Tipo Garrafón</label>
+                  <input type="text" class="form-control" 
+                         [(ngModel)]="nuevoDano.tipo_garrafon" name="tipo_garrafon" required>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">Tipo de Daño</label>
+                  <select class="form-select" [(ngModel)]="nuevoDano.tipo_dano" name="tipo_dano" required>
+                    <option *ngFor="let tipo of tiposDano" [value]="tipo">{{ tipo | uppercase }}</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Responsable</label>
+                  <select class="form-select" [(ngModel)]="nuevoDano.responsable" name="responsable" required>
+                    <option *ngFor="let resp of responsables" [value]="resp">{{ resp | uppercase }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Notas</label>
+                <textarea class="form-control" [(ngModel)]="nuevoDano.notas" name="notas"></textarea>
+              </div>
+              <div class="text-end">
+                <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar Reporte</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Modal para editar reporte -->
+    <div class="modal fade" id="editarDanoModal" tabindex="-1" aria-hidden="true" *ngIf="danoSeleccionado">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar Reporte</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form (ngSubmit)="actualizarEstado(danoSeleccionado.id, danoSeleccionado.estado)">
+              <div class="mb-3">
+                <label class="form-label">Cliente</label>
+                <input type="text" class="form-control" [value]="danoSeleccionado.cliente" readonly>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">Cantidad Dañados</label>
+                  <input type="number" class="form-control" 
+                         [(ngModel)]="danoSeleccionado.cantidad_danados" name="cantidad_danados" 
+                         min="1" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Tipo Garrafón</label>
+                  <input type="text" class="form-control" 
+                         [(ngModel)]="danoSeleccionado.tipo_garrafon" name="tipo_garrafon" required>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">Estado</label>
+                  <select class="form-select" [(ngModel)]="danoSeleccionado.estado" name="estado" required>
+                    <option *ngFor="let estado of estados" [value]="estado">{{ estado | uppercase }}</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Monto a Cobrar</label>
+                  <input type="number" class="form-control" 
+                         [(ngModel)]="danoSeleccionado.monto_cobro" name="monto_cobro" 
+                         min="0" step="0.01">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Notas</label>
+                <textarea class="form-control" [(ngModel)]="danoSeleccionado.notas" name="notas"></textarea>
+              </div>
+              <div class="text-end">
+                <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar Cambios</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,122 @@
+<header class="header bg-primary text-white p-2 d-flex justify-content-between align-items-center">
+  <div class="d-flex align-items-center">
+    <h1 class="m-0" style="font-size: 1.5rem;">Purificadora San Lorenzo</h1>
+  </div>
+  <div class="notification-container">
+    <button class="btn btn-link text-white mr-2 position-relative" 
+            title="Notificaciones" 
+            (click)="abrir_cerrar_notificaciones()">
+      <i class="fas fa-bell"></i>
+      <span *ngIf="notificaciones_no_leidas > 0" class="notification-badge">
+        {{ notificaciones_no_leidas }}
+      </span>
+    </button>
+  
+    <div id="notificaciones_contenedor" *ngIf="notificaciones_abierto" [class.show]="notificaciones_abierto">
+      <div class="notification-header">
+        <h5>Notificaciones</h5>
+        <small>{{ notificaciones.length }} mensajes</small>
+      </div>
+      
+      <div class="notification-list">
+        <div *ngIf="notificaciones.length === 0" class="notification-empty">
+          No hay notificaciones nuevas
+        </div>
+        
+        <div class="notification-item" 
+             *ngFor="let notificacion of notificaciones"
+             [class.unread]="!notificacion.visto">
+          <div class="notification-content">
+            <div class="notification-type">
+              <span class="notification-dot"></span>
+              {{ notificacion.tipo | uppercase }}
+            </div>
+            <p class="notification-message">{{ notificacion.mensaje }}</p>
+            <small class="notification-time">{{ notificacion.fecha | date:'shortTime' }}</small>
+          </div>
+          <button class="mark-as-read" (click)="marcarComoLeida(notificacion.id); $event.stopPropagation()">
+            <i class="fas fa-check-circle"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-link text-white mr-2" title="Calendario">
+      <i class="fas fa-calendar"></i>
+    </button>
+    <button class="btn btn-link text-white" title="Salir">
+      <i class="fas fa-sign-out-alt"></i>
+    </button>
+  </div>
+</header>
+
+<div class="d-flex">
+  <aside class="bg-white text-black p-3" style="width: 250px; min-height: 100vh;">
+    <div class="text-center p-2" style="background-color: #f0f0f0; border-radius: 10px; margin-bottom: 10px;">
+      <img src="assets/imagenes/logo.png" alt="Logo" width="100" height="50">
+    </div>
+
+    <form class="mb-4">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" style="background-color: white; color: black;">
+        <button class="btn btn-outline-dark" type="button">
+          <i class="fas fa-search" style="color: black;"></i>
+        </button>
+      </div>
+    </form>
+
+    <ul class="nav flex-column">
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/home" routerLinkActive="active">
+          <i class="fas fa-home mr-2"></i> Inicio
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/recorridos" routerLinkActive="active">
+          <i class="fas fa-route mr-2"></i> Recorridos
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/inventario" routerLinkActive="active">
+          <i class="fas fa-boxes mr-2"></i> Inventario
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/agenda" routerLinkActive="active">
+          <i class="fas fa-calendar-alt mr-2"></i> Agenda
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/clientes" routerLinkActive="active">
+          <i class="fas fa-users mr-2"></i> Clientes
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/compras" routerLinkActive="active">
+          <i class="fas fa-shopping-cart mr-2"></i> Compras
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/deudas" routerLinkActive="active">
+          <i class="fas fa-file-invoice-dollar mr-2"></i> Deudas
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/danos" routerLinkActive="active">
+          <i class="fas fa-flask mr-2"></i> Daños
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link text-black" routerLink="/reportes" routerLinkActive="active">
+          <i class="fas fa-chart-bar mr-2"></i> Reportes
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="flex-grow-1 p-4" style="background-color: #f8f9fa; position: relative;">
+   
+    
+    <router-outlet></router-outlet>
+  </main>
+</div>

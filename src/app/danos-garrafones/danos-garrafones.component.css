@@ -1,0 +1,65 @@
+/* Estilos para la tabla de daños */
+.table {
+    margin-top: 20px;
+  }
+  
+  .badge {
+    font-size: 0.85em;
+    padding: 5px 10px;
+  }
+  
+  /* Estilos para los estados */
+  .bg-warning {
+    background-color: #ffc107;
+    color: #212529;
+  }
+  
+  .bg-info {
+    background-color: #0dcaf0;
+    color: #fff;
+  }
+  
+  .bg-success {
+    background-color: #198754;
+    color: #fff;
+  }
+  
+  .bg-danger {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  /* Modal styles */
+  .modal-content {
+    padding: 20px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .d-flex.justify-content-between {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .form-control.w-25 {
+      width: 100% !important;
+    }
+    
+    .row.mb-3 > div {
+      margin-bottom: 10px;
+    }
+  }
+  
+  /* Estilos específicos para tipos de daño */
+  .dano-quebrado {
+    color: #dc3545;
+    font-weight: bold;
+  }
+  
+  .dano-rayado {
+    color: #fd7e14;
+  }
+  
+  .dano-perdida {
+    color: #6f42c1;
+  }
